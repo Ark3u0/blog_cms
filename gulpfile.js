@@ -12,29 +12,50 @@ var babelify = require('babelify');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var fs = require('fs');
+var path = require('path');
 var chalk = require('chalk');
 
-var sourceFileFolder = './src/main/webapp/resources/js/index/';
-var destFolder = './src/main/webapp/resources/js/bundle/';
+var sourceFileFolder = './app';
+var destFolder = './bundle';
 
 gulp.task('default', ['browserify', 'watchify']);
 
+function getFolders() {
+  return fs.readdirSync(sourceFileFolder)
+    .filter(function(file) {
+      return fs.statSync(path.join(sourceFileFolder, file)).isDirectory();
+    });
+}
+
+function getIndex(dirName) {
+  return fs.readdirSync(path.join(sourceFileFolder, dirName))
+    .filter(function(file) {
+      return file.indexOf("index") > -1;
+    }).shift();
+}
+
+
 gulp.task('browserify', function() {
-  return fs.readdirSync(sourceFileFolder).map(function (fileName) {
-    var bundler = browserify(sourceFileFolder + fileName).transform(babelify, {presets: ["react","es2015"]});
-    return bundle_js(bundler, fileName);
+  getFolders().map(function (dirName) {
+    var fileName = getIndex(dirName);
+    if(fileName) {
+      var bundler = browserify(path.join(sourceFileFolder, dirName, fileName)).transform(babelify, {presets: ["react","es2015"]});
+      return bundle_js(bundler, dirName, fileName);
+    }
   });
 });
 
+
 gulp.task('watchify', function () {
-  return fs.readdirSync(sourceFileFolder).map(function (fileName) {
-    var bundler = watchify(browserify(sourceFileFolder + fileName, watchify.args)).transform(babelify, {presets: ["react","es2015"]});
-
-    bundler.on('update', function() {
-      bundle_js(bundler, fileName)
-    });
-
-    bundler.bundle().pipe(fs.createWriteStream(destFolder + fileName));
+  return getFolders().map(function (dirName) {
+    var fileName = getIndex(dirName);
+    if(fileName) {
+      var bundler = watchify(browserify(path.join(sourceFileFolder, dirName, fileName), watchify.args)).transform(babelify, {presets: ["react", "es2015"]});
+      bundler.on('update', function() {
+        bundle_js(bundler, dirName, fileName)
+      });
+      bundler.bundle().pipe(fs.createWriteStream(path.join(destFolder, fileName)));
+    }
   });
 });
 
@@ -59,8 +80,8 @@ gulp.task('test', function(done) {
   });
 });
 
-function bundle_js(bundler, fileName) {
-  console.log('Bundling ' + fileName + '...');
+function bundle_js(bundler, dirName, fileName) {
+  console.log('Bundling ' + path.join(sourceFileFolder, dirName, fileName) + '...');
   return bundler
     .bundle()
     .on('error', error_handler)
