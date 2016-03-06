@@ -5,10 +5,10 @@ import NavigationBar from '../navigation/navigation_bar.js';
 
 const { Component } = React;
 
-class HomeIndex extends Component{
+class ContactIndex extends Component{
   render() {
     return (
-      <div className="homeIndex">
+      <div className="contactIndex">
         <NavigationBar/>
       </div>
     );
@@ -16,6 +16,6 @@ class HomeIndex extends Component{
 };
 
 ReactDOM.render(
-  <HomeIndex />,
+  <ContactIndex />,
   document.getElementById('content')
 );
