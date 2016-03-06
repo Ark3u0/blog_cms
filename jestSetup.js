@@ -1,13 +1,8 @@
-jest.dontMock('chai');
-jest.dontMock('sinon');
-jest.dontMock('sinon-chai');
-jest.dontMock('lodash');
+jest.autoMockOff();
 
-sinon = require('sinon');
-chai = require('chai');
+const sinon = require('sinon');
+const chai = require('chai');
+
 chai.use(require('sinon-chai'));
 expect = chai.expect;
 
-_ = require('lodash');
-
-jest.autoMockOff();

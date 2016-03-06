@@ -8,7 +8,7 @@ class NavigationBar extends Component {
   render() {
     return <div className="navigationBar">
       <NavigationButton pageView="HOME" buttonText="Home"/>
-      <NavigationButton pageView="CONTACT" buttonText="Contact Us"/>
+      <NavigationButton pageView="CONTACT_US" buttonText="Contact Us"/>
     </div>;
   }
 }

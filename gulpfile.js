@@ -117,7 +117,8 @@ function error_handler(err) {
 
 var jestConfig = {
   rootDir: 'app',
-  "setupTestFrameworkScriptFile": "jestSetup.js",
+  "setupTestFrameworkScriptFile": "../jestSetup.js",
+  "scriptPreprocessor": "../node_modules/babel-jest/src/index.js",
   "testPathIgnorePatterns": [
     "/node_modules/"
   ],
