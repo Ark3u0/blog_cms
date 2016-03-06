@@ -2,7 +2,7 @@
 import React from 'react';
 import getUrlPath from './get_url_path.js'
 
-const { Component, PropTypes, StyleSheet } = React;
+const { Component, PropTypes } = React;
 
 class NavigationButton extends Component {
   constructor(props) {
@@ -12,16 +12,20 @@ class NavigationButton extends Component {
 
   mouseOver() {
     this.setState({hover: true});
-    console.log(this.state.hover);
   }
 
   mouseOut() {
     this.setState({hover: false});
-    console.log(this.state.hover);
+  }
+
+  buildActiveStyle() {
+    let activeStyle = this.state.hover ? Object.assign({}, style.button, style.hover) : Object.assign({}, style.button);
+    activeStyle = this.props.width ? Object.assign({}, activeStyle, {width: this.props.width}) : activeStyle;
+    return activeStyle;
   }
 
   render() {
-    const activeStyle = this.state.hover ? Object.assign({}, style.button, style.hover) : Object.assign({}, style.button);
+    const activeStyle = this.buildActiveStyle();
     return <a href={getUrlPath(this.props.pageView)}>
         <button onMouseOver={ () => this.mouseOver() }
                 onMouseOut={ () => this.mouseOut() }
@@ -32,13 +36,13 @@ class NavigationButton extends Component {
 
 NavigationButton.propTypes = {
   pageView: PropTypes.string.isRequired,
-  buttonText: PropTypes.string.isRequired
+  buttonText: PropTypes.string.isRequired,
+  width: PropTypes.string
 };
 
 const style = {
   button: {
     'backgroundColor': 'transparent',
-    'boxShadow': 'none',
     'color': 'black',
     'boxSizing': 'border-box',
     'WebkitFontSmoothing': 'antialiased',
