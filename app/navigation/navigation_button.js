@@ -1,6 +1,6 @@
 
 import React from 'react';
-import getUrlPath from './get_url_path.js'
+import getPageView from './get_page_view.js'
 
 const { Component, PropTypes } = React;
 
@@ -26,7 +26,7 @@ class NavigationButton extends Component {
 
   render() {
     const activeStyle = this.buildActiveStyle();
-    return <a href={getUrlPath(this.props.pageView)}>
+    return <a href={getPageView(this.props.pageView)}>
         <button onMouseOver={ () => this.mouseOver() }
                 onMouseOut={ () => this.mouseOut() }
                 style={activeStyle}>{this.props.buttonText}</button>
