@@ -56,7 +56,9 @@ const style = {
   },
   hover: {
     'transform': 'translate(0px, -2px)',
-    'cursor': 'pointer'
+    'cursor': 'pointer',
+    'color': 'blue',
+    'textDecoration': 'underline'
   }
 };
 

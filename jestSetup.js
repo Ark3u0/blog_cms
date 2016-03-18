@@ -4,6 +4,7 @@ global.sinon = require('sinon');
 global.chai = require('chai');
 global.ReactTestUtils = require('react-addons-test-utils');
 global.React = require('react');
+global._ = require('lodash');
 
 chai.use(require('sinon-chai'));
 global.expect = chai.expect;
@@ -16,15 +17,27 @@ global.shallowRenderComponent = (component) => {
 
 global.getShallowRendererForComponent = (component) => {
   const shallowRenderer = ReactTestUtils.createRenderer();
-  return shallowRenderer.render(component);
+  shallowRenderer.render(component);
+  return shallowRenderer;
 };
 
 global.getComponentByProp = (component, qualifier, value) => {
-  let qualifierValue, element;
+  let element;
 
   for (element = Object.assign({}, component);
-       typeof element !== 'undefined' && typeof element.props !== 'undefined';
+       (element instanceof Array) ||
+       (typeof element !== 'undefined' && typeof element.props !== 'undefined');
        element = element.props.children) {
+
+    if (element instanceof Array) {
+      const childSearchResult = _.map(element, (child) => {
+        return getComponentByProp(child, qualifier, value);
+      });
+
+      element = _.find(childSearchResult, (child) => {
+        return typeof child !== 'undefined';
+      });
+    }
 
     if (element.props[qualifier] === value) {
       return element;
@@ -36,8 +49,19 @@ global.getComponentByType = (component, value) => {
   let qualifierValue, element;
 
   for (element = Object.assign({}, component);
-       typeof element !== 'undefined' && typeof element.props !== 'undefined';
+       (element instanceof Array) ||
+       (typeof element !== 'undefined' && typeof element.props !== 'undefined');
        element = element.props.children) {
+
+    if (element instanceof Array) {
+      const childSearchResult = _.map(element, (child) => {
+        return getComponentByProp(child, qualifier, value);
+      });
+
+      element = _.find(childSearchResult, (child) => {
+        return typeof child !== 'undefined';
+      });
+    }
 
     if (element.type === value) {
       return element;

@@ -35,4 +35,17 @@ describe('NavigationButton', () => {
       expect(button.props.style.width).to.eq("10em");
     });
   });
+
+  //describe('mouse hovering', () => {
+  //  it('should set hover state to true from false when button has mouse over it', () => {
+  //    const navButton = getShallowRendererForComponent(<NavigationButton pageView='testView' buttonText="Click Something"/>);
+  //    const button = shallowRenderComponent(<NavigationButton pageView='testView' buttonText="Click Something"/>);
+  //    console.log("NAV BUTTON RENDERER: ", navButton);
+  //    console.log("NAV BUTTON: ", button);
+  //    navButton.mouseOver();
+  //    console.log(checking);
+  //    //const button = getComponentByType(navButton, 'button');
+  //    //expect(button.props.style.width).to.eq("10em");
+  //  });
+  //});
 });
