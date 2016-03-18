@@ -21,7 +21,6 @@ global.getShallowRendererForComponent = (component) => {
 
   shallowRenderer.getState = () => {return shallowRenderer._instance._instance.state};
   shallowRenderer.setState = (input) => {return shallowRenderer._instance._instance.setState(input)};
-  //shallowRenderer.getPublicInstance();
 
   return shallowRenderer;
 };
