@@ -34,25 +34,40 @@ function getIndex(dirName) {
     }).shift();
 }
 
-
 gulp.task('browserify', function() {
+    var fileName = 'viewer_index.js';
+    var bundler = browserify(path.join(sourceFileFolder, fileName)).transform(babelify, {presets: ["react","es2015"]});
+    return bundle_js(bundler, fileName, "");
+});
+
+gulp.task('watchify', function() {
+  var fileName = 'viewer_index.js';
+  var bundler = watchify(browserify(path.join(sourceFileFolder, fileName), watchify.args)).transform(babelify, {presets: ["react", "es2015"]});
+  bundler.on('update', function() {
+    bundle_js(bundler, fileName, "")
+  });
+  bundler.bundle().pipe(fs.createWriteStream(path.join(destFolder, fileName)));
+});
+
+
+gulp.task('browserify-all', function() {
   getFolders().map(function (dirName) {
     var fileName = getIndex(dirName);
     if(fileName) {
       var bundler = browserify(path.join(sourceFileFolder, dirName, fileName)).transform(babelify, {presets: ["react","es2015"]});
-      return bundle_js(bundler, dirName, fileName);
+      return bundle_js(bundler, fileName, dirName);
     }
   });
 });
 
 
-gulp.task('watchify', function () {
+gulp.task('watchify-all', function () {
   return getFolders().map(function (dirName) {
     var fileName = getIndex(dirName);
     if(fileName) {
       var bundler = watchify(browserify(path.join(sourceFileFolder, dirName, fileName), watchify.args)).transform(babelify, {presets: ["react", "es2015"]});
       bundler.on('update', function() {
-        bundle_js(bundler, dirName, fileName)
+        bundle_js(bundler, fileName, dirName)
       });
       bundler.bundle().pipe(fs.createWriteStream(path.join(destFolder, fileName)));
     }
@@ -80,7 +95,7 @@ gulp.task('test', function(done) {
   });
 });
 
-function bundle_js(bundler, dirName, fileName) {
+function bundle_js(bundler, fileName, dirName) {
   console.log('Bundling ' + path.join(sourceFileFolder, dirName, fileName) + '...');
   return bundler
     .bundle()

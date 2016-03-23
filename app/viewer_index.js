@@ -1,23 +1,23 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import NavigationBar from '../navigation/navigation_bar.js';
-import BlogEntry from './blog_entry.js';
+import NavigationBar from './navigation/navigation_bar.js';
+import BlogEntry from './home/blog_entry.js';
 
 const { Component } = React;
 
-class HomeIndex extends Component{
+class ViewerIndex extends Component{
   render() {
     return (
-      <div className="homeIndex">
+      <div className="viewerIndex">
         <NavigationBar/>
-        <BlogEntry title=/>
+        <BlogEntry/>
       </div>
     );
   }
 };
 
 ReactDOM.render(
-  <HomeIndex />,
+  <ViewerIndex />,
   document.getElementById('content')
 );

@@ -1,6 +1,5 @@
 const html_indices = {
-  'HOME': 'home.html',
-  'CONTACT_US': 'contact.html'
+  'HOME': 'viewer.html'
 };
 
 module.exports = (pageViewName) => {

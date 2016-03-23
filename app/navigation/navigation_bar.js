@@ -7,8 +7,7 @@ const { Component } = React;
 class NavigationBar extends Component {
   render() {
     return <div className="navigationBar" style={styles.navbar}>
-      <NavigationButton width="50%" pageView="HOME" buttonText="Home"/>
-      <NavigationButton width="50%" pageView="CONTACT_US" buttonText="Contact Us"/>
+      <NavigationButton width="100%" pageView="HOME" buttonText="Home"/>
     </div>;
   }
 }
