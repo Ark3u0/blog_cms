@@ -8,6 +8,7 @@ const { Component, PropTypes } = React;
 class BlogEntry extends Component {
   constructor(props) {
     super(props);
+    this.state = {};
   }
 
   componentDidMount() {
