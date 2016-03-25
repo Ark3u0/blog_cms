@@ -17,6 +17,7 @@
     "browserify": "latest",
     "chalk": "latest",
     "gulp": "3.9.1",
+    "gulp-if": "latest",
     "gulp-uglify": "1.5.3",
     "gulp-util": "latest",
     "gulp-sourcemaps": "latest",

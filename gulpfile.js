@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
+var gulp_if = require('gulp-if');
 var util = require('gulp-util');
 var jest = require('jest-cli');
 
@@ -15,6 +16,7 @@ var buffer = require('vinyl-buffer');
 var fs = require('fs');
 var path = require('path');
 var chalk = require('chalk');
+var _ = require('lodash');
 
 var sourceFileFolder = './app';
 var destFolder = './bundle';
@@ -36,9 +38,10 @@ function getIndex(dirName) {
 }
 
 gulp.task('browserify', function() {
-    var fileName = 'viewer_index.js';
-    var bundler = browserify(path.join(sourceFileFolder, fileName)).transform(babelify, {presets: ["react","es2015"]});
-    return bundle_js(bundler, fileName, "");
+  var fileName = 'viewer_index.js';
+  var bundler = browserify(path.join(sourceFileFolder, fileName), {debug: getCommandLineFlag('-d')}).transform(babelify, {presets: ["react","es2015"]});
+
+  return bundle_js(bundler, fileName, "", getCommandLineFlag('-d'));
 });
 
 gulp.task('watchify', function() {
@@ -77,9 +80,15 @@ gulp.task('watchify-all', function () {
 
 var getCommandLineOption = function(flag) {
   var args = process.argv.slice(2);
-  if (flag == args[1]) {
-    return process.argv.slice(2)[2];
+  var index = _.findIndex(args, function(arg) { return arg === flag });
+  if (index >= 0) {
+    return args[index + 1];
   }
+};
+
+var getCommandLineFlag = function(flag) {
+  var args = process.argv.slice(2);
+  return _.findIndex(args, function(arg) { return arg === flag }) !== -1;
 };
 
 gulp.task('test', function(done) {
@@ -96,33 +105,16 @@ gulp.task('test', function(done) {
   });
 });
 
-gulp.task('browserify-debug', function() {
-  var fileName = 'viewer_index.js';
-  var bundler = browserify(path.join(sourceFileFolder, fileName), {debug: true}).transform(babelify, {presets: ["react","es2015"]});
-  return bundle_js_debug(bundler, fileName, "");
-});
-
-function bundle_js_debug(bundler, fileName, dirName) {
+function bundle_js(bundler, fileName, dirName, debug) {
   console.log('Bundling ' + path.join(sourceFileFolder, dirName, fileName) + '...');
   return bundler
     .bundle()
     .on('error', error_handler)
     .pipe(source(fileName))
     .pipe(buffer())
-    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(gulp_if(debug, sourcemaps.init({loadMaps: true})))
     .pipe(uglify())
-    .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest(destFolder));
-}
-
-function bundle_js(bundler, fileName, dirName) {
-  console.log('Bundling ' + path.join(sourceFileFolder, dirName, fileName) + '...');
-  return bundler
-    .bundle()
-    .on('error', error_handler)
-    .pipe(source(fileName))
-    .pipe(buffer())
-    .pipe(uglify())
+    .pipe(gulp_if(debug, sourcemaps.write('./')))
     .pipe(gulp.dest(destFolder));
 }
 
