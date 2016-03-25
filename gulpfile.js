@@ -38,41 +38,19 @@ gulp.task('test', function(done) {
 });
 
 gulp.task('browserify', function() {
-    getFolders().map(function(dirName) {
-      var fileName = getIndex(dirName);
-      if (fileName) {
-        var bundler = browserify(path.join(sourceFileFolder, dirName, fileName), {debug: getCommandLineFlag('-d')}).transform(babelify, {presets: ["react","es2015"]});
-        return bundle_js(bundler, fileName, dirName, getCommandLineFlag('-d'));
-      }
-    });
+    var fileName = "index.js";
+    var bundler = browserify(path.join(sourceFileFolder, fileName), {debug: getCommandLineFlag('-d')}).transform(babelify, {presets: ["react","es2015"]});
+    return bundle_js(bundler, fileName, getCommandLineFlag('-d'));
 });
 
 gulp.task('watchify', function() {
-  getFolders().map(function (dirName) {
-    var fileName = getIndex(dirName);
-    if (fileName) {
-      var bundler = watchify(browserify(path.join(sourceFileFolder, dirName, fileName), Object.assign({}, watchify.args, {debug: getCommandLineFlag("-d")}))).transform(babelify, {presets: ["react", "es2015"]});
-      bundler.on('update', function () {
-        bundle_js(bundler, fileName, dirName, getCommandLineFlag("-d"));
-      });
-      bundler.bundle().pipe(fs.createWriteStream(path.join(destFolder, fileName)));
-    }
-  });
-});
-
-function getFolders() {
-  return fs.readdirSync(sourceFileFolder)
-    .filter(function(file) {
-      return fs.statSync(path.join(sourceFileFolder, file)).isDirectory();
+    var fileName = "index.js";
+    var bundler = watchify(browserify(path.join(sourceFileFolder, fileName), Object.assign({}, watchify.args, {debug: getCommandLineFlag("-d")}))).transform(babelify, {presets: ["react", "es2015"]});
+    bundler.on('update', function () {
+      bundle_js(bundler, fileName, getCommandLineFlag("-d"));
     });
-}
-
-function getIndex(dirName) {
-  return fs.readdirSync(path.join(sourceFileFolder, dirName))
-    .filter(function(file) {
-      return file.indexOf("index") > -1;
-    }).shift();
-}
+    bundle_js(bundler, fileName, getCommandLineFlag("-d"));
+});
 
 var getCommandLineOption = function(flag) {
   var args = process.argv.slice(2);
@@ -87,8 +65,8 @@ var getCommandLineFlag = function(flag) {
   return _.findIndex(args, function(arg) { return arg === flag }) !== -1;
 };
 
-function bundle_js(bundler, fileName, dirName, debug) {
-  console.log('Bundling ' + path.join(sourceFileFolder, dirName, fileName) + '...');
+function bundle_js(bundler, fileName, debug) {
+  console.log('Bundling ' + path.join(sourceFileFolder, fileName) + '...');
   return bundler
     .bundle()
     .on('error', error_handler)

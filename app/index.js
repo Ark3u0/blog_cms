@@ -1,8 +1,8 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import NavigationBar from './../navigation/navigation_bar.js';
-import BlogEntry from './blog_entry.js';
+import NavigationBar from './navigation/navigation_bar.js';
+import BlogEntry from './home/blog_entry.js';
 
 const { Component } = React;
 
