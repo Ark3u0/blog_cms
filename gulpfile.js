@@ -10,6 +10,7 @@ var browserify = require('browserify');
 var babelify = require('babelify');
 
 var source = require('vinyl-source-stream');
+var sourcemaps = require('gulp-sourcemaps');
 var buffer = require('vinyl-buffer');
 var fs = require('fs');
 var path = require('path');
@@ -94,6 +95,25 @@ gulp.task('test', function(done) {
     }
   });
 });
+
+gulp.task('browserify-debug', function() {
+  var fileName = 'viewer_index.js';
+  var bundler = browserify(path.join(sourceFileFolder, fileName), {debug: true}).transform(babelify, {presets: ["react","es2015"]});
+  return bundle_js_debug(bundler, fileName, "");
+});
+
+function bundle_js_debug(bundler, fileName, dirName) {
+  console.log('Bundling ' + path.join(sourceFileFolder, dirName, fileName) + '...');
+  return bundler
+    .bundle()
+    .on('error', error_handler)
+    .pipe(source(fileName))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(uglify())
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest(destFolder));
+}
 
 function bundle_js(bundler, fileName, dirName) {
   console.log('Bundling ' + path.join(sourceFileFolder, dirName, fileName) + '...');
