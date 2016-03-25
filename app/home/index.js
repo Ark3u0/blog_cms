@@ -1,15 +1,15 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import NavigationBar from './navigation/navigation_bar.js';
-import BlogEntry from './home/blog_entry.js';
+import NavigationBar from './../navigation/navigation_bar.js';
+import BlogEntry from './blog_entry.js';
 
 const { Component } = React;
 
-class ViewerIndex extends Component{
+class Index extends Component {
   render() {
     return (
-      <div className="viewerIndex">
+      <div className="index">
         <NavigationBar/>
         <BlogEntry/>
       </div>
@@ -18,6 +18,6 @@ class ViewerIndex extends Component{
 };
 
 ReactDOM.render(
-  <ViewerIndex />,
+  <Index />,
   document.getElementById('content')
 );

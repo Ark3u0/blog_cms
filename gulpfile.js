@@ -23,6 +23,43 @@ var destFolder = './bundle';
 
 gulp.task('default', ['browserify', 'watchify']);
 
+gulp.task('test', function(done) {
+  var options = { cache: true, config: jestConfig };
+  if(getCommandLineOption('-s')) {
+    options = Object.assign({}, {_:[getCommandLineOption('-s')]}, options);
+  }
+  jest.runCLI(options, ".", function(runSuccess) {
+    if (runSuccess) {
+      done();
+    } else {
+      done(new Error("Unit tests failed!"));
+    }
+  });
+});
+
+gulp.task('browserify', function() {
+    getFolders().map(function(dirName) {
+      var fileName = getIndex(dirName);
+      if (fileName) {
+        var bundler = browserify(path.join(sourceFileFolder, dirName, fileName), {debug: getCommandLineFlag('-d')}).transform(babelify, {presets: ["react","es2015"]});
+        return bundle_js(bundler, fileName, dirName, getCommandLineFlag('-d'));
+      }
+    });
+});
+
+gulp.task('watchify', function() {
+  getFolders().map(function (dirName) {
+    var fileName = getIndex(dirName);
+    if (fileName) {
+      var bundler = watchify(browserify(path.join(sourceFileFolder, dirName, fileName), Object.assign({}, watchify.args, {debug: getCommandLineFlag("-d")}))).transform(babelify, {presets: ["react", "es2015"]});
+      bundler.on('update', function () {
+        bundle_js(bundler, fileName, dirName, getCommandLineFlag("-d"));
+      });
+      bundler.bundle().pipe(fs.createWriteStream(path.join(destFolder, fileName)));
+    }
+  });
+});
+
 function getFolders() {
   return fs.readdirSync(sourceFileFolder)
     .filter(function(file) {
@@ -37,47 +74,6 @@ function getIndex(dirName) {
     }).shift();
 }
 
-gulp.task('browserify', function() {
-  var fileName = 'viewer_index.js';
-  var bundler = browserify(path.join(sourceFileFolder, fileName), {debug: getCommandLineFlag('-d')}).transform(babelify, {presets: ["react","es2015"]});
-
-  return bundle_js(bundler, fileName, "", getCommandLineFlag('-d'));
-});
-
-gulp.task('watchify', function() {
-  var fileName = 'viewer_index.js';
-  var bundler = watchify(browserify(path.join(sourceFileFolder, fileName), watchify.args)).transform(babelify, {presets: ["react", "es2015"]});
-  bundler.on('update', function() {
-    bundle_js(bundler, fileName, "")
-  });
-  bundler.bundle().pipe(fs.createWriteStream(path.join(destFolder, fileName)));
-});
-
-
-gulp.task('browserify-all', function() {
-  getFolders().map(function (dirName) {
-    var fileName = getIndex(dirName);
-    if(fileName) {
-      var bundler = browserify(path.join(sourceFileFolder, dirName, fileName)).transform(babelify, {presets: ["react","es2015"]});
-      return bundle_js(bundler, fileName, dirName);
-    }
-  });
-});
-
-
-gulp.task('watchify-all', function () {
-  return getFolders().map(function (dirName) {
-    var fileName = getIndex(dirName);
-    if(fileName) {
-      var bundler = watchify(browserify(path.join(sourceFileFolder, dirName, fileName), watchify.args)).transform(babelify, {presets: ["react", "es2015"]});
-      bundler.on('update', function() {
-        bundle_js(bundler, fileName, dirName)
-      });
-      bundler.bundle().pipe(fs.createWriteStream(path.join(destFolder, fileName)));
-    }
-  });
-});
-
 var getCommandLineOption = function(flag) {
   var args = process.argv.slice(2);
   var index = _.findIndex(args, function(arg) { return arg === flag });
@@ -90,20 +86,6 @@ var getCommandLineFlag = function(flag) {
   var args = process.argv.slice(2);
   return _.findIndex(args, function(arg) { return arg === flag }) !== -1;
 };
-
-gulp.task('test', function(done) {
-  var options = { cache: true, config: jestConfig };
-  if(getCommandLineOption('-s')) {
-    options = Object.assign({}, {_:[getCommandLineOption('-s')]}, options);
-  }
-  jest.runCLI(options, ".", function(runSuccess) {
-    if (runSuccess) {
-      done();
-    } else {
-      done(new Error("Unit tests failed!"));
-    }
-  });
-});
 
 function bundle_js(bundler, fileName, dirName, debug) {
   console.log('Bundling ' + path.join(sourceFileFolder, dirName, fileName) + '...');
