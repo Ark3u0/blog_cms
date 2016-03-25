@@ -25,7 +25,7 @@ class BlogEntry extends Component {
   }
 
   parseBody() {
-    <a>{this.state.body}</a>
+    return <a>{this.state.body}</a>
   }
 
   render() {
