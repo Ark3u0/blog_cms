@@ -1,6 +1,6 @@
 
 import React from 'react';
-import jsonRequest from '../network/jsonRequest.js';
+import jsonRequest from '../network/json_request.js';
 import _ from 'lodash';
 
 const { Component, PropTypes } = React;
@@ -12,7 +12,6 @@ class BlogEntry extends Component {
   }
 
   componentDidMount() {
-    // TODO: Explore testing options for jsonRequest
     jsonRequest('./stubbed_data/json_data.json').then((result) => {
       this.setState({
         title: result.json.title,
