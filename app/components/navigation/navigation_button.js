@@ -44,8 +44,6 @@ const style = {
   button: {
     'backgroundColor': 'transparent',
     'color': 'black',
-    'boxSizing': 'border-box',
-    'WebkitFontSmoothing': 'antialiased',
     'fontFamily': "Open Sans, Helvetica, Arial, sans-serif",
     'fontSize': '1.3em',
     'fontWeight': 300,
@@ -55,10 +53,8 @@ const style = {
     'borderRadius': 0
   },
   hover: {
-    'transform': 'translate(0px, -2px)',
     'cursor': 'pointer',
-    'color': 'blue',
-    'textDecoration': 'underline'
+    'color': 'blue'
   }
 };
 
