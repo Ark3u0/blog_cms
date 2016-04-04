@@ -29,7 +29,7 @@ const style = {
     position: 'fixed',
     top: '0px',
     zIndex: '1',
-    height: '8em'
+    height: '10vw'
   },
 
   logo: {

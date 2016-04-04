@@ -11,7 +11,8 @@
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "lodash": "latest",
-    "recordrtc": "latest"
+    "recordrtc": "latest",
+    "youtube-player": "latest"
   },
   "devDependencies": {
     "browserify": "latest",
