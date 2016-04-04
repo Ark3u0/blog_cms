@@ -58,7 +58,6 @@ const styles = {
   },
 
   player: {
-    width: '80%',
     position: 'absolute',
     top: 0,
     left: 0,
