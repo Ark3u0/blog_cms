@@ -21,18 +21,6 @@ describe('NavigationButton', () => {
       const button = getComponentByType(navButton, 'button');
       expect(button.props.children).to.eq("Click Me!");
     });
-
-    it('should set width of button when width is passed in', () => {
-      const navButton = shallowRenderComponent(<NavigationButton pageView='' width="10%" buttonText=""/>);
-      const button = getComponentByType(navButton, 'button');
-      expect(button.props.style.width).to.eq("10%");
-    });
-
-    it('should default width of button to 10em when no width is passed in', () => {
-      const navButton = shallowRenderComponent(<NavigationButton pageView='' buttonText=""/>);
-      const button = getComponentByType(navButton, 'button');
-      expect(button.props.style.width).to.eq("10em");
-    });
   });
 
   describe('mouse hovering', () => {

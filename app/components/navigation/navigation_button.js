@@ -20,7 +20,6 @@ class NavigationButton extends Component {
 
   buildActiveStyle() {
     let activeStyle = this.state.hover ? Object.assign({}, style.button, style.hover) : Object.assign({}, style.button);
-    activeStyle = this.props.width ? Object.assign({}, activeStyle, {width: this.props.width}) : activeStyle;
     return activeStyle;
   }
 
@@ -37,7 +36,6 @@ class NavigationButton extends Component {
 NavigationButton.propTypes = {
   pageView: PropTypes.string.isRequired,
   buttonText: PropTypes.string.isRequired,
-  width: PropTypes.string
 };
 
 const style = {
