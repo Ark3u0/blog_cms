@@ -6,7 +6,7 @@ import youTubePlayer from 'youtube-player';
 
 const { Component } = React;
 
-const stateNames = {
+const playerStateNames = {
   '-1': 'unstarted',
   0: 'ended',
   1: 'playing',
@@ -39,8 +39,8 @@ class EmbedVideo extends Component {
   }
 
   onPlayerStateChange(event) {
-    let playerState = JSON.parse(window.event.data);
-    this.setState({playerState: stateNames[playerState.info]});
+    let playerState = event ? JSON.parse(event.data) : JSON.parse(window.event.data);
+    this.setState({playerState: playerStateNames[playerState.info]});
   }
 
   stopVideo() {

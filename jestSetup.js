@@ -15,6 +15,8 @@ global.shallowRenderComponent = (component) => {
   return shallowRenderer.getRenderOutput();
 };
 
+global.renderIntoDocument = ReactTestUtils.renderIntoDocument;
+
 global.getShallowRendererForComponent = (component) => {
   const shallowRenderer = ReactTestUtils.createRenderer();
   shallowRenderer.render(component);
