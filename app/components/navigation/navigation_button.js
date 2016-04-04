@@ -42,19 +42,21 @@ NavigationButton.propTypes = {
 
 const style = {
   button: {
-    'backgroundColor': 'transparent',
-    'color': 'black',
-    'fontFamily': "Open Sans, Helvetica, Arial, sans-serif",
-    'fontSize': '1.3em',
-    'fontWeight': 300,
-    'width': '10em',
-    'padding': '0.2em',
-    'border': 'none',
-    'borderRadius': 0
+    backgroundColor: 'transparent',
+    color: 'black',
+    fontFamily: "Open Sans, Helvetica, Arial, sans-serif",
+    fontSize: '1.3em',
+    fontSize: '1.5vw',
+    fontWeight: 300,
+    marginLeft: '5%',
+    marginRight: '5%',
+    padding: '0.2em',
+    border: 'none',
+    borderRadius: 0
   },
   hover: {
-    'cursor': 'pointer',
-    'color': 'blue'
+    cursor: 'pointer',
+    color: 'blue'
   }
 };
 

@@ -7,14 +7,18 @@ const { Component } = React;
 class NavigationBar extends Component {
   render() {
     return <div className="navigationBar" style={styles.navbar}>
-      <NavigationButton width="100%" pageView="HOME" buttonText="Home"/>
+      <NavigationButton pageView="HOME" buttonText="Home"/>
+      <NavigationButton pageView="HOME" buttonText="About"/>
+      <NavigationButton pageView="HOME" buttonText="Videos"/>
+      <NavigationButton pageView="HOME" buttonText="Submit a Video"/>
     </div>;
   }
 }
 
 const styles = {
   navbar: {
-    borderBottom: '2px black solid'
+    width: '100%',
+    alignItems: 'center'
   }
 };
 

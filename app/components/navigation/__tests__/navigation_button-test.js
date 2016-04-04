@@ -4,7 +4,6 @@ describe('NavigationButton', () => {
   jest.setMock('../get_page_view.js', getPageViewStub);
 
   const NavigationButton = require("../navigation_button.js");
-  const config = require('../../config.js');
 
   beforeEach(() => {
     getPageViewStub.reset().returns();
