@@ -25,17 +25,16 @@ class NavigationButton extends Component {
 
   render() {
     const activeStyle = this.buildActiveStyle();
-    return <a href={getPageView(this.props.pageView)}>
-        <button onMouseOver={ () => this.mouseOver() }
+    return <button onMouseOver={ () => this.mouseOver() }
                 onMouseOut={ () => this.mouseOut() }
+                onClick={() => {this.props.onClick()}}
                 style={activeStyle}>{this.props.buttonText}</button>
-      </a>
   }
 }
 
 NavigationButton.propTypes = {
-  pageView: PropTypes.string.isRequired,
   buttonText: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 const style = {

@@ -3,7 +3,7 @@ import NavigationBar from '../navigation/navigation_bar.js';
 import config from '../../../config.js';
 import Logo from './logo.js';
 
-const { Component } = React;
+const { Component, PropTypes } = React;
 
 class Header extends Component {
   constructor(props) {
@@ -17,11 +17,15 @@ class Header extends Component {
         <Logo logoLink={config.logoUrl} pageView="HOME"/>
       </div>
       <div className="navbar" style={style.navbar}>
-        <NavigationBar/>
+        <NavigationBar viewSetCallback={this.props.viewSetCallback}/>
       </div>
     </div>);
   }
 }
+
+Header.PropTypes = {
+  viewSetCallback: PropTypes.func.isRequired
+};
 
 const style = {
   header: {
@@ -29,7 +33,9 @@ const style = {
     position: 'fixed',
     top: '0px',
     zIndex: '1',
-    height: '10vw'
+    height: '10vw',
+    backgroundColor: 'white',
+    opacity: '0.9'
   },
 
   logo: {
