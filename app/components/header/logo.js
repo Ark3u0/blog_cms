@@ -1,6 +1,5 @@
 
 import React from 'react';
-import getPageView from '../navigation/get_page_view.js'
 
 const { Component, PropTypes } = React;
 
@@ -10,28 +9,31 @@ class Logo extends Component {
   }
 
   render() {
-    return <a href={getPageView(this.props.pageView)} >
+    return <div onClick={() => this.props.viewSetCallback("HOME")} style={style.logo}>
       <img src={this.props.logoLink} style={style.logo}/>
-    </a>
+    </div>
   }
 }
 
 Logo.propTypes = {
-  pageView: PropTypes.string.isRequired,
+  viewSetCallback: PropTypes.func.isRequired,
   logoLink: PropTypes.string.isRequired
 };
 
 const style = {
-  logo: {
+  logoContainer: {
     position: 'relative',
     top: '50%',
-    transform: 'translateY(-50%)',
+    transform: 'translateY(-50%)'
+  },
+  logo: {
     backgroundColor: 'transparent',
     border: 'none',
-    maxWidth: '80%',
-    maxHeight: '80%',
+    maxWidth: '100%',
+    maxHeight: '100%',
     height: 'auto',
-    width: 'auto'
+    width: 'auto',
+    display: 'inline'
   }
 };
 

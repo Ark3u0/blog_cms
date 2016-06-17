@@ -1,6 +1,5 @@
 
 import React from 'react';
-import getPageView from './get_page_view.js'
 
 const { Component, PropTypes } = React;
 
@@ -49,7 +48,8 @@ const style = {
     marginRight: '5%',
     padding: '0.2em',
     border: 'none',
-    borderRadius: 0
+    borderRadius: 0,
+    outline: 'none'
   },
   hover: {
     cursor: 'pointer',

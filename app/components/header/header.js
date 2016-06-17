@@ -14,7 +14,7 @@ class Header extends Component {
     return (
     <div className="header" style={style.header}>
       <div className="website-logo" style={style.logo}>
-        <Logo logoLink={config.logoUrl} pageView="HOME"/>
+        <Logo logoLink={config.logoUrl} viewSetCallback={this.props.viewSetCallback}/>
       </div>
       <div className="navbar" style={style.navbar}>
         <NavigationBar viewSetCallback={this.props.viewSetCallback}/>

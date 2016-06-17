@@ -10,32 +10,43 @@ const { Component } = React;
 class Index extends Component {
   constructor(props) {
     super(props);
-    this.state = {currentView: 'HOME'};
+    this.state = {currentView: 'HOME', loading: true};
   }
 
-  setCurrentViewName(route) {
+  setCurrentView(route) {
     this.setState({currentView: route});
   }
 
   render() {
     return (
       <div className="index">
-        <Header viewSetCallback={(route) => this.setCurrentViewName(route)}/>
+        <Header viewSetCallback={(route) => this.setCurrentView(route)}/>
         <div className="body" style={styles.body}>
           {getPageView(this.state.currentView)}
         </div>
       </div>
     );
   }
+
+  componentDidMount() {
+    this.setState({loading: false});
+  }
+
+  componentDidUpdate() {
+    if (this.state.loading) {
+      this.setState({loading: false});
+      console.log('here 23');
+    }
+  }
 }
 
 const styles = {
   body: {
     position: 'relative',
-    overflow: 'scroll',
     width: '60%',
     margin: 'auto',
-    marginTop: '12vw'
+    marginTop: '12vw',
+    overflow: 'hidden'
   }
 };
 

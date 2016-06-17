@@ -11,10 +11,9 @@ class NavigationBar extends Component {
 
   render() {
     return <div className="navigationBar" style={styles.navbar}>
-      <NavigationButton pageView="HOME" buttonText="Home" onClick={() => this.props.viewSetCallback('HOME')}/>
-      <NavigationButton pageView="HOME" buttonText="About" onClick={() => this.props.viewSetCallback('ABOUT')}/>
-      <NavigationButton pageView="HOME" buttonText="Videos" onClick={() => this.props.viewSetCallback('VIDEOS')}/>
-      <NavigationButton pageView="HOME" buttonText="Submit a Video" onClick={() => this.props.viewSetCallback('SUBMIT_A_VIDEO')}/>
+      <NavigationButton buttonText="Home" onClick={() => this.props.viewSetCallback('HOME')}/>
+      <NavigationButton buttonText="About" onClick={() => this.props.viewSetCallback('ABOUT')}/>
+      <NavigationButton buttonText="Videos" onClick={() => this.props.viewSetCallback('VIDEOS')}/>
     </div>;
   }
 }
