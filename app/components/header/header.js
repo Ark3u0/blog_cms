@@ -2,6 +2,7 @@ import React from 'react';
 import NavigationBar from '../navigation/navigation_bar.js';
 import config from '../../../config.js';
 import Logo from './logo.js';
+import reduxStore from '../redux/redux_store.js';
 
 const { Component, PropTypes } = React;
 
@@ -14,10 +15,10 @@ class Header extends Component {
     return (
     <div className="header" style={style.header}>
       <div className="website-logo" style={style.logo}>
-        <Logo logoLink={config.logoUrl} viewSetCallback={this.props.viewSetCallback}/>
+        <Logo logoLink={config.logoUrl} onClick={() => reduxStore.dispatch({type: 'VIEW_HOME'})}/>
       </div>
       <div className="navbar" style={style.navbar}>
-        <NavigationBar viewSetCallback={this.props.viewSetCallback}/>
+        <NavigationBar/>
       </div>
     </div>);
   }

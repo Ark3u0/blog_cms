@@ -9,15 +9,15 @@ class Logo extends Component {
   }
 
   render() {
-    return <div onClick={() => this.props.viewSetCallback("HOME")} style={style.logo}>
+    return <div onClick={() => this.props.onClick()} style={style.logo}>
       <img src={this.props.logoLink} style={style.logo}/>
     </div>
   }
 }
 
 Logo.propTypes = {
-  viewSetCallback: PropTypes.func.isRequired,
-  logoLink: PropTypes.string.isRequired
+  logoLink: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 const style = {

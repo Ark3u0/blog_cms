@@ -2,41 +2,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Header from './components/header/header.js';
-import EmbedVideo from './components/youtube/embed_video.js';
 import getPageView from './components/navigation/get_page_view.js';
+import reduxStore from './components/redux/redux_store.js';
+import reduxComponentSubscriber from './components/redux/redux_component_subscriber.js';
 
 const { Component } = React;
 
 class Index extends Component {
   constructor(props) {
     super(props);
-    this.state = {currentView: 'HOME', loading: true};
-  }
-
-  setCurrentView(route) {
-    this.setState({currentView: route});
+    reduxComponentSubscriber(this, {}, reduxStore, 'pageView');
   }
 
   render() {
     return (
       <div className="index">
-        <Header viewSetCallback={(route) => this.setCurrentView(route)}/>
+        <Header/>
         <div className="body" style={styles.body}>
           {getPageView(this.state.currentView)}
         </div>
       </div>
     );
-  }
-
-  componentDidMount() {
-    this.setState({loading: false});
-  }
-
-  componentDidUpdate() {
-    if (this.state.loading) {
-      this.setState({loading: false});
-      console.log('here 23');
-    }
   }
 }
 

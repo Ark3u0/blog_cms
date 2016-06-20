@@ -1,8 +1,9 @@
 
 import React from 'react';
 import NavigationButton from './navigation_button.js';
+import reduxStore from '../redux/redux_store.js';
 
-const { Component, PropTypes } = React;
+const { Component } = React;
 
 class NavigationBar extends Component {
   constructor(props) {
@@ -11,16 +12,11 @@ class NavigationBar extends Component {
 
   render() {
     return <div className="navigationBar" style={styles.navbar}>
-      <NavigationButton buttonText="Home" onClick={() => this.props.viewSetCallback('HOME')}/>
-      <NavigationButton buttonText="About" onClick={() => this.props.viewSetCallback('ABOUT')}/>
-      <NavigationButton buttonText="Videos" onClick={() => this.props.viewSetCallback('VIDEOS')}/>
+      <NavigationButton buttonText="Home" onClick={() => reduxStore.dispatch({type: 'VIEW_HOME'})}/>
+      <NavigationButton buttonText="About" onClick={() => reduxStore.dispatch({type: 'VIEW_ABOUT'})}/>
     </div>;
   }
 }
-
-NavigationBar.PropTypes = {
-  viewSetCallback: PropTypes.func.isRequired
-};
 
 const styles = {
   navbar: {
