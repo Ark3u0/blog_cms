@@ -73,7 +73,7 @@ function bundle_js(bundler, fileName, debug) {
     .pipe(source(fileName))
     .pipe(buffer())
     .pipe(gulp_if(debug, sourcemaps.init({loadMaps: true})))
-    .pipe(uglify())
+    .pipe(gulp_if(!debug, uglify()))
     .pipe(gulp_if(debug, sourcemaps.write('./')))
     .pipe(gulp.dest(destFolder));
 }
