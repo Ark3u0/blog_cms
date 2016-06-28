@@ -1,14 +1,12 @@
 const Home = require('../views/home.js');
 const About = require('../views/about.js');
-const Videos = require('../views/videos.js');
-const SubmitAVideo = require('../views/submit_a_video.js');
+const MakeAPost = require('../views/make_a_post.js');
 const React = require('react');
 
 const routes = {
   'HOME': <Home/>,
   'ABOUT': <About/>,
-  'VIDEOS': <Videos/>,
-  'SUBMIT_A_VIDEO': <SubmitAVideo/>
+  'MAKE_A_POST': <MakeAPost/>
 };
 
 module.exports = (pageViewName) => {

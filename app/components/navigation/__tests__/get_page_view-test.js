@@ -15,14 +15,6 @@ describe('getPageView', () => {
     expect(getPageView('ABOUT')).to.eql(<About/>);
   });
 
-  it('should get the submit a video page when SUBMIT_A_VIDEO pageView name is provided', () => {
-    expect(getPageView('SUBMIT_A_VIDEO')).to.eql(<SubmitAVideo/>);
-  });
-
-  it('should get the videos page when VIDEOS pageView name is provided', () => {
-    expect(getPageView('VIDEOS')).to.eql(<Videos/>);
-  });
-
   it('should not blowup when pageView does not exist', () => {
     expect(getPageView('INVALID_PAGE_VIEW')).to.eql(<div className="undefinedRoute"></div>);
   });

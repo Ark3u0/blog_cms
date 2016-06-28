@@ -14,6 +14,7 @@ class NavigationBar extends Component {
     return <div className="navigationBar" style={styles.navbar}>
       <NavigationButton buttonText="Home" onClick={() => reduxStore.dispatch({type: 'VIEW_HOME'})}/>
       <NavigationButton buttonText="About" onClick={() => reduxStore.dispatch({type: 'VIEW_ABOUT'})}/>
+      <NavigationButton buttonText="Make A Post" onClick={() => reduxStore.dispatch({type: 'VIEW_MAKE_A_POST'})}/>
     </div>;
   }
 }
